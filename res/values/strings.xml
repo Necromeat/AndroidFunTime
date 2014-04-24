@@ -13,5 +13,6 @@
     <string name="text_service">Text Service</string>
     <string name="find_store">Find Store</string>
     <string name="scan_product">Scan Product</string>
+    <string name="send_list_text">Send List to Friend</string>
 
 </resources>

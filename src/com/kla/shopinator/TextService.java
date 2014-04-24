@@ -1,9 +1,15 @@
 package com.kla.shopinator;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import datamodels.ShoppingItemModel;
+import dbfunctions.Controller;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,10 +19,21 @@ import android.os.Build;
 
 public class TextService extends Activity {
 
+	String dummyList = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.text_service);
+		
+		Controller con = new Controller();
+		
+		
+		List<ShoppingItemModel> temp = con.getShoppingList();
+		
+		for(ShoppingItemModel i : temp){
+			dummyList += i.getItemName()+" x "+i.getQuantity() + "\n";
+		}
 	}
 
 	@Override
@@ -37,6 +54,11 @@ public class TextService extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void sendTextButton(View v){
+		SmsManager smsM = SmsManager.getDefault();
+		smsM.sendTextMessage("28414527", null, dummyList, null, null);
 	}
 
 }
