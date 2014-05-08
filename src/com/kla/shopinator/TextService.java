@@ -7,8 +7,12 @@ import datamodels.ShoppingItemModel;
 import dbfunctions.Controller;
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ListActivity;
+import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,15 +24,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds;
+import android.provider.ContactsContract.Data;
 
 public class TextService extends Activity {
 
 	String dummyList = null;
 	ListView listContacts;
+	CursorLoader cursorLoader;
+	Cursor cursor; 
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +58,41 @@ public class TextService extends Activity {
 		
 		
 		listContacts = (ListView)findViewById(R.id.conactlist);
-		  
-		  Uri queryUri = ContactsContract.Contacts.CONTENT_URI;
+		listContacts.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				
+				String number = cursor.getString(cursor.getColumnIndex(CommonDataKinds.Phone.NUMBER));
+				
+				Context context = getApplicationContext(); 
+				CharSequence text = "texting to"+number;
+				int duration = Toast.LENGTH_LONG; 
+				Toast toast = Toast.makeText(context, text, duration); 
+				toast.show();
+				
+				SmsManager smsM = SmsManager.getDefault();
+				smsM.sendTextMessage(number, null, dummyList, null, null);
+				
+			}
+		});
+		  
+		  //Uri queryUri = ContactsContract.Contacts.CONTENT_URI;
+		  Uri queryUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+
+		  
 		  String[] projection = new String[] {
-		    ContactsContract.Contacts._ID,
-		    ContactsContract.Contacts.DISPLAY_NAME};
+		    //ContactsContract.Contacts._ID,
+		    //ContactsContract.Contacts.DISPLAY_NAME
+		    ContactsContract.CommonDataKinds.Phone._ID,
+		    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+		    ContactsContract.CommonDataKinds.Phone.NUMBER
+		    };
 		  
-		  String selection = ContactsContract.Contacts.DISPLAY_NAME + " IS NOT NULL";
+		  String selection = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " IS NOT NULL";
 		  
-		  CursorLoader cursorLoader = new CursorLoader(
+		  cursorLoader = new CursorLoader(
 		            this, 
 		            queryUri, 
 		            projection, 
@@ -63,14 +100,16 @@ public class TextService extends Activity {
 		            null, 
 		            null);
 		  
-		  Cursor cursor = cursorLoader.loadInBackground();
+		  cursor = cursorLoader.loadInBackground();
 		  
-		  String[] from = {ContactsContract.Contacts.DISPLAY_NAME};
-		        int[] to = {android.R.id.text1};
+		  
+		  String[] from = {(String)ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,(String)ContactsContract.CommonDataKinds.Phone.NUMBER};
+		  
+		        int[] to = {android.R.id.text1,android.R.id.text2};
 		        
 		        ListAdapter adapter = new SimpleCursorAdapter(
 		                this, 
-		                android.R.layout.simple_list_item_1, 
+		                android.R.layout.simple_list_item_2, 
 		                cursor, 
 		                from, 
 		                to, 
@@ -98,10 +137,17 @@ public class TextService extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+
 	
-	public void sendTextButton(View v){
-		SmsManager smsM = SmsManager.getDefault();
-		smsM.sendTextMessage("28414527", null, dummyList, null, null);
-	}
+	
+	//public void sendTextButton(View v){
+	//	SmsManager smsM = SmsManager.getDefault();
+	//	smsM.sendTextMessage("28414527", null, dummyList, null, null);
+	//}
+	
+	
+	
+	
 
 }
