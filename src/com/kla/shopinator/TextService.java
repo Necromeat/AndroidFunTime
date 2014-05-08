@@ -142,6 +142,7 @@ public class TextService extends Activity {
 			int duration = Toast.LENGTH_LONG; 
 			Toast toast = Toast.makeText(context, text, duration); 
 			toast.show();
+			tempNum.setText("");
 		}else{
 			Context context = getApplicationContext(); 
 			CharSequence text = "Number not valid!";
