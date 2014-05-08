@@ -8,18 +8,27 @@ import dbfunctions.Controller;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.CursorLoader;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.os.Build;
+import android.provider.ContactsContract;
 
 public class TextService extends Activity {
 
 	String dummyList = null;
+	ListView listContacts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +43,41 @@ public class TextService extends Activity {
 		for(ShoppingItemModel i : temp){
 			dummyList += i.getItemName()+" x "+i.getQuantity() + "\n";
 		}
-	}
+		
+		
+		listContacts = (ListView)findViewById(R.id.conactlist);
+		  
+		  Uri queryUri = ContactsContract.Contacts.CONTENT_URI;
+
+		  String[] projection = new String[] {
+		    ContactsContract.Contacts._ID,
+		    ContactsContract.Contacts.DISPLAY_NAME};
+		  
+		  String selection = ContactsContract.Contacts.DISPLAY_NAME + " IS NOT NULL";
+		  
+		  CursorLoader cursorLoader = new CursorLoader(
+		            this, 
+		            queryUri, 
+		            projection, 
+		            selection, 
+		            null, 
+		            null);
+		  
+		  Cursor cursor = cursorLoader.loadInBackground();
+		  
+		  String[] from = {ContactsContract.Contacts.DISPLAY_NAME};
+		        int[] to = {android.R.id.text1};
+		        
+		        ListAdapter adapter = new SimpleCursorAdapter(
+		                this, 
+		                android.R.layout.simple_list_item_1, 
+		                cursor, 
+		                from, 
+		                to, 
+		                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+		        listContacts.setAdapter(adapter);
+		 }
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
