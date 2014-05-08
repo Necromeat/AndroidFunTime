@@ -1,46 +1,36 @@
 package com.kla.shopinator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import datamodels.ShoppingItemModel;
 import dbfunctions.Controller;
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.telephony.SmsManager;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.os.Build;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
-import android.provider.ContactsContract.Data;
 
 public class TextService extends Activity {
 
 	String dummyList = "";
 	ListView listContacts;
 	CursorLoader cursorLoader;
-	Cursor cursor; 
-	
+	Cursor cursor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +52,6 @@ public class TextService extends Activity {
 			dummyList += i.getItemName()+" x "+i.getQuantity() + "\n";
 		}
 		
-		
 		listContacts = (ListView)findViewById(R.id.conactlist);
 		listContacts.setOnItemClickListener(new OnItemClickListener() {
 
@@ -71,9 +60,9 @@ public class TextService extends Activity {
 					long id) {
 				
 				String number = cursor.getString(cursor.getColumnIndex(CommonDataKinds.Phone.NUMBER));
-				
+				String name = cursor.getString(cursor.getColumnIndex(CommonDataKinds.Phone.DISPLAY_NAME));
 				Context context = getApplicationContext(); 
-				CharSequence text = "texting to"+number;
+				CharSequence text = "Sending list to "+name;
 				int duration = Toast.LENGTH_LONG; 
 				Toast toast = Toast.makeText(context, text, duration); 
 				toast.show();
@@ -84,13 +73,10 @@ public class TextService extends Activity {
 			}
 		});
 		  
-		  //Uri queryUri = ContactsContract.Contacts.CONTENT_URI;
 		  Uri queryUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 
 		  
 		  String[] projection = new String[] {
-		    //ContactsContract.Contacts._ID,
-		    //ContactsContract.Contacts.DISPLAY_NAME
 		    ContactsContract.CommonDataKinds.Phone._ID,
 		    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
 		    ContactsContract.CommonDataKinds.Phone.NUMBER
@@ -144,13 +130,26 @@ public class TextService extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-
 	
-	
-	//public void sendTextButton(View v){
-	//	SmsManager smsM = SmsManager.getDefault();
-	//	smsM.sendTextMessage("28414527", null, dummyList, null, null);
-	//}
+	public void sendTextButton(View v){
+		EditText tempNum = (EditText)findViewById(R.id.editText1);
+		String num = tempNum.getText().toString();
+		if(!num.isEmpty()&&num.length()>=8){
+			SmsManager smsM = SmsManager.getDefault();
+			smsM.sendTextMessage(num, null, dummyList, null, null);
+			Context context = getApplicationContext(); 
+			CharSequence text = "Sending list to "+num;
+			int duration = Toast.LENGTH_LONG; 
+			Toast toast = Toast.makeText(context, text, duration); 
+			toast.show();
+		}else{
+			Context context = getApplicationContext(); 
+			CharSequence text = "Number not valid!";
+			int duration = Toast.LENGTH_LONG; 
+			Toast toast = Toast.makeText(context, text, duration); 
+			toast.show();
+		}
+	}
 	
 	
 	
