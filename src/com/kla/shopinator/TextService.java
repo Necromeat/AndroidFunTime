@@ -36,7 +36,7 @@ import android.provider.ContactsContract.Data;
 
 public class TextService extends Activity {
 
-	String dummyList = null;
+	String dummyList = "";
 	ListView listContacts;
 	CursorLoader cursorLoader;
 	Cursor cursor; 
@@ -47,11 +47,16 @@ public class TextService extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.text_service);
 		
-		Context context = getApplicationContext();
 		Controller con = new Controller();
+
+		Context context = getApplicationContext();
 		con.setContext(context);
 		
-		List<ShoppingItemModel> temp = con.getShoppingList("list1");
+		ShoppingItemModel test = new ShoppingItemModel(10,"a");
+		con.addItemToList("shopping_list",test);
+		con.SaveSpecificListToDB("shopping_list");
+		
+		List<ShoppingItemModel> temp = con.getShoppingList("shopping_list");
 		
 		for(ShoppingItemModel i : temp){
 			dummyList += i.getItemName()+" x "+i.getQuantity() + "\n";

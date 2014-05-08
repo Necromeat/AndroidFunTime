@@ -15,7 +15,6 @@ public class Controller {
 	
 		
 	public void setContext(Context m){
-		list.clear();
 		filehandler = new FileHandler(m);
 	}
 

@@ -32,11 +32,11 @@ public class ShoppingList extends Activity {
 		con.setContext(context);
 		
 		ShoppingItemModel test = new ShoppingItemModel(10,"a");
-		con.setContext(context);
-		con.SaveSpecificListToDB("list1");
+		con.addItemToList("shopping_list",test);
+		con.SaveSpecificListToDB("shopping_list");
 		
 		ArrayList<String> dummyList = new ArrayList<String>();
-		List<ShoppingItemModel> temp = con.getShoppingList("list1");
+		List<ShoppingItemModel> temp = con.getShoppingList("shopping_list");
 		
 		for(ShoppingItemModel i : temp){
 			dummyList.add(i.getItemName()+i.getQuantity());
