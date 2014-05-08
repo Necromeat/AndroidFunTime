@@ -8,6 +8,7 @@ import dbfunctions.Controller;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,8 +27,16 @@ public class ShoppingList extends Activity {
 		setContentView(R.layout.shopping_list);
 		
 		Controller con = new Controller();
+
+		Context context = getApplicationContext();
+		con.setContext(context);
+		
+		ShoppingItemModel test = new ShoppingItemModel(10,"a");
+		con.setContext(context);
+		con.SaveSpecificListToDB("list1");
+		
 		ArrayList<String> dummyList = new ArrayList<String>();
-		List<ShoppingItemModel> temp = con.getShoppingList();
+		List<ShoppingItemModel> temp = con.getShoppingList("list1");
 		
 		for(ShoppingItemModel i : temp){
 			dummyList.add(i.getItemName()+i.getQuantity());

@@ -1,8 +1,10 @@
 package com.kla.shopinator;
 
+import dbfunctions.Controller;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +30,8 @@ public class MainMenu extends Activity {
 		textService = new Intent(this, TextService.class);
 		findStore = new Intent(this, FindStore.class);
 		scanProduct = new Intent(this, ScanProduct.class);
+
+	
 	}
 
 	@Override

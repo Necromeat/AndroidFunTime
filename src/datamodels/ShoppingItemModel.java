@@ -1,11 +1,16 @@
 package datamodels;
 
-public class ShoppingItemModel {
-	private int quantity;
+
+public class ShoppingItemModel  {
 	private String itemName;
+	private int quantity;
+	public ShoppingItemModel(String name, int amountofitems){
+		this.quantity = amountofitems;
+		this.itemName = name;
+	}
 	
-		public ShoppingItemModel(int quantity, String itemName) {
-			super();
+	public ShoppingItemModel(int quantity, String itemName) {
+	
 			this.quantity = quantity;
 			this.itemName = itemName;
 		}

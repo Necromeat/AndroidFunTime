@@ -47,10 +47,11 @@ public class TextService extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.text_service);
 		
+		Context context = getApplicationContext();
 		Controller con = new Controller();
+		con.setContext(context);
 		
-		
-		List<ShoppingItemModel> temp = con.getShoppingList();
+		List<ShoppingItemModel> temp = con.getShoppingList("list1");
 		
 		for(ShoppingItemModel i : temp){
 			dummyList += i.getItemName()+" x "+i.getQuantity() + "\n";
