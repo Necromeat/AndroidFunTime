@@ -12,7 +12,40 @@
         android:id="@+id/shopping_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true" >        
+        android:layout_below="@+id/button1"
+        android:clickable="true" >
+        
     </ListView>
 
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ems="10" 
+        android:hint="Type a new item">
+
+        <requestFocus />
+    </EditText>
+
+
+
+    <Button
+        android:id="@+id/button1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/shopping_list"
+        android:layout_below="@+id/editText1"
+        android:onClick="addItemButton"
+        android:text="Add item" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_toRightOf="@+id/editText1" />
+    
 </RelativeLayout>

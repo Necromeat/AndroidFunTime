@@ -31,7 +31,12 @@ public class Controller {
 
 
 	public void addItemToList(String arg0,ShoppingItemModel arg1){
-		list.add(arg1);	
+		loadList(arg0); 	// added by Kris 15/5
+		list.add(arg1);
+		if(list.contains(arg1)){
+			System.out.println("Item added (in controller).");
+		}
+		SaveSpecificListToDB(arg0);		// added by Kris 15/5
 	}
 
 	public List<ShoppingItemModel> getShoppingList(String arg0) {
