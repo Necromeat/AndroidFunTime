@@ -10,23 +10,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.kla.shopinator.MainMenu$PlaceholderFragment" >
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/button2"
-        android:layout_below="@+id/button2"
-        android:layout_marginTop="28dp"
-        android:onClick="scanProductButton"
-        android:text="@string/scan_product" />
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/button3"
+        android:layout_alignLeft="@+id/imageView1"
+        android:src="@drawable/sms" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/imageView2"
+        android:layout_alignTop="@+id/button3"
+        android:src="@drawable/find" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="79dp"
         android:onClick="shoppingListButton"
         android:text="@string/shopping_list" />
 
@@ -34,19 +41,29 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
+        android:layout_alignRight="@+id/button1"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/imageView1"
         android:onClick="textServiceButton"
         android:text="@string/text_service" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/button1"
+        android:layout_marginRight="26dp"
+        android:layout_toLeftOf="@+id/button1"
+        android:src="@drawable/list" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignRight="@+id/button2"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="62dp"
         android:onClick="findStoreButton"
         android:text="@string/find_store" />
 

@@ -19,7 +19,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.kla.shopinator.LoadPage"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,23 +29,28 @@
         </activity>
         <activity
             android:name="com.kla.shopinator.MainMenu"
-            android:label="@string/title_activity_main_menu" >
+            android:label="@string/title_activity_main_menu"
+            android:theme="@android:style/Theme.Holo" >
         </activity>
         <activity
             android:name="com.kla.shopinator.ShoppingList"
-            android:label="@string/title_activity_shopping_list" >
+            android:label="@string/title_activity_shopping_list"
+            android:theme="@android:style/Theme.Holo" >
         </activity>
         <activity
             android:name="com.kla.shopinator.TextService"
-            android:label="@string/title_activity_text_service" >
+            android:label="@string/title_activity_text_service" 
+            android:theme="@android:style/Theme.Holo">
         </activity>
         <activity
             android:name="com.kla.shopinator.ScanProduct"
-            android:label="@string/title_activity_scan_product" >
+            android:label="@string/title_activity_scan_product"
+            android:theme="@android:style/Theme.Holo" >
         </activity>
         <activity
             android:name="com.kla.shopinator.FindStore"
-            android:label="@string/title_activity_find_store" >
+            android:label="@string/title_activity_find_store"
+            android:theme="@android:style/Theme.Holo" >
         </activity>
     </application>
 
