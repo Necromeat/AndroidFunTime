@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import datamodels.ShoppingItemModel;
-
 import android.content.Context;
 
 public class Controller {
@@ -20,7 +19,6 @@ public class Controller {
 
 
 	public void SaveSpecificListToDB(String arg0) {
-	
 		try {
 			filehandler.savelist(arg0, list);
 		} catch (IOException e) {
@@ -43,7 +41,22 @@ public class Controller {
 		loadList(arg0);
 		return list;
 	}
-
+	
+	/*
+	 * method added by Kris 15/5
+	 * Needs to be fixed:
+	 * 1 Shouldn't be public!
+	 * 2 Deletes all files I think - should only delete a specific shopping list
+	 */
+	public void deleteList(){
+		list.clear();
+		//try {
+		//	filehandler.deleteList();
+		//} catch (IOException e) {
+		//	// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
+	}
 	
 	@SuppressWarnings("resource")
 	 private void loadList(String Name){
@@ -60,7 +73,6 @@ public class Controller {
 		}
 		scan.close();
 		scanner.close();
-		
 	}
 
 }

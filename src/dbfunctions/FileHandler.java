@@ -1,6 +1,7 @@
 package dbfunctions;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +12,6 @@ import java.io.Writer;
 import java.util.List;
 
 import datamodels.ShoppingItemModel;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -20,6 +20,12 @@ public class FileHandler {
 
 	public FileHandler(Context x){
 		this.mContext = x;
+	}
+	
+	public void deleteList() throws IOException{
+		//deletes all files
+		File file = mContext.getFilesDir();
+		file.delete();		
 	}
 	
 	public void savelist(String fileName, List<ShoppingItemModel> lister) throws IOException{

@@ -23,7 +23,6 @@ import android.widget.Spinner;
 import android.os.Build;
 
 public class ShoppingList extends Activity {
-	//just quick change
 	Controller con;
 	Spinner itemAmount;
 	ListView listViewHandle;
@@ -42,29 +41,27 @@ public class ShoppingList extends Activity {
 
 		Context context = getApplicationContext();
 		con.setContext(context);
-		
+		/*
+		 * Temporary for test purposes
+		 */
+		con.deleteList();
 		ShoppingItemModel test = new ShoppingItemModel(10,"apples");
 		con.addItemToList("shopping_list",test);
 		con.SaveSpecificListToDB("shopping_list");
-		
+		/*
+		 * 
+		 */
 		tempArray = new ArrayList<String>();
 		tempList = new ArrayList<ShoppingItemModel>();
 		fillList();
 	}
 	
-	public void fillSpinner(){
-		try{
-			List<Integer> itemX = new ArrayList<Integer>();
-			for(int i = 1; i < 30; i++){
-				itemX.add(i);
-			}
-			ArrayAdapter<Integer> spinAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, itemX);
-			spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			itemAmount.setAdapter(spinAdapter);
-		}
-		catch(NullPointerException e){
-			System.out.println("Spinner error: "+e.getMessage());
-		}
+	public void fillSpinner() {
+		itemAmount = (Spinner) findViewById(R.id.spinner1);
+		ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this, R.array.spinner_numbers, android.R.layout.simple_spinner_item);
+		spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		itemAmount.setAdapter(spinAdapter);
+		System.out.println("filling spinner");
 	}
 	
 	public void fillList(){
@@ -78,7 +75,8 @@ public class ShoppingList extends Activity {
 		}
 		for(ShoppingItemModel i : tempList){
 			if(tempArray.contains(i.getItemName())==false){
-				tempArray.add(i.getItemName());
+				String amount = ""+i.getQuantity();
+				tempArray.add(i.getItemName()+" x "+amount);
 				System.out.println("Item added to temp shopping list: "+i.getItemName());
 			}else{
 				System.out.println("Shopping list already contains "+i.getItemName());
@@ -97,7 +95,7 @@ public class ShoppingList extends Activity {
 		itemAmount = (Spinner)findViewById(R.id.spinner1);
 		String item = newItem.getText().toString();
 		//Testing with 5 for now
-		int amount = 5;//Integer.parseInt(itemAmount.getSelectedItem().toString());
+		int amount = Integer.parseInt(itemAmount.getSelectedItem().toString());
 		temp = new ShoppingItemModel(amount, item);
 		con.addItemToList("shopping_list", temp);
 		fillList();
