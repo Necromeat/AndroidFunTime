@@ -23,7 +23,7 @@ import android.widget.Spinner;
 import android.os.Build;
 
 public class ShoppingList extends Activity {
-
+	//just quick change
 	Controller con;
 	Spinner itemAmount;
 	ListView listViewHandle;
