@@ -5,8 +5,10 @@ import java.util.List;
 import datamodels.ShoppingItemModel;
 import dbfunctions.Controller;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import android.provider.ContactsContract.CommonDataKinds;
 public class TextService extends Activity {
 
 	String dummyList = "";
+	String number = "";
 	ListView listContacts;
 	CursorLoader cursorLoader;
 	Cursor cursor;
@@ -59,16 +62,11 @@ public class TextService extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
 				
-				String number = cursor.getString(cursor.getColumnIndex(CommonDataKinds.Phone.NUMBER));
+				number = cursor.getString(cursor.getColumnIndex(CommonDataKinds.Phone.NUMBER));
 				String name = cursor.getString(cursor.getColumnIndex(CommonDataKinds.Phone.DISPLAY_NAME));
-				Context context = getApplicationContext(); 
-				CharSequence text = "Sending list to "+name;
-				int duration = Toast.LENGTH_LONG; 
-				Toast toast = Toast.makeText(context, text, duration); 
-				toast.show();
+				 
 				
-				SmsManager smsM = SmsManager.getDefault();
-				smsM.sendTextMessage(number, null, dummyList, null, null);
+				alertbox("Send Text", "Are you sure you want to text "+ name);
 				
 			}
 		});
@@ -133,15 +131,9 @@ public class TextService extends Activity {
 	
 	public void sendTextButton(View v){
 		EditText tempNum = (EditText)findViewById(R.id.editText1);
-		String num = tempNum.getText().toString();
-		if(!num.isEmpty()&&num.length()>=8){
-			SmsManager smsM = SmsManager.getDefault();
-			smsM.sendTextMessage(num, null, dummyList, null, null);
-			Context context = getApplicationContext(); 
-			CharSequence text = "Sending list to "+num;
-			int duration = Toast.LENGTH_LONG; 
-			Toast toast = Toast.makeText(context, text, duration); 
-			toast.show();
+		number = tempNum.getText().toString();
+		if(!number.isEmpty()&&number.length()>=8){
+			alertbox("Send Text", "Are you sure you want to text "+ number);
 			tempNum.setText("");
 		}else{
 			Context context = getApplicationContext(); 
@@ -153,7 +145,34 @@ public class TextService extends Activity {
 	}
 	
 	
-	
+	protected void alertbox(String title, String mymessage)
+	   {
+	   new AlertDialog.Builder(this)
+	      .setMessage(mymessage)
+	      .setTitle(title)
+	      .setCancelable(true)
+	      .setNegativeButton("CANCEL",
+	         new DialogInterface.OnClickListener() {
+	         public void onClick(DialogInterface dialog, int whichButton){}
+	         })
+	         .setPositiveButton("CONFIRM", new DialogInterface.OnClickListener()
+	         {
+	             @Override
+	             public void onClick(DialogInterface dialog, int whichButton)
+	             {
+	                // SHOULD NOW WORK
+	            	SmsManager smsM = SmsManager.getDefault();
+	 				smsM.sendTextMessage(number, null, dummyList, null, null);
+	 				
+	 				Context context = getApplicationContext();
+	 				CharSequence text = "Text Sent";
+					int duration = Toast.LENGTH_LONG; 
+					Toast toast = Toast.makeText(context, text, duration); 
+					toast.show();
+	             }
+	         })
+	      .show();
+	   }
 	
 
 }
