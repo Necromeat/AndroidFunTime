@@ -9,7 +9,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import datamodels.ShoppingItemModel;
 import android.content.Context;
@@ -43,7 +45,43 @@ public class FileHandler {
 			if(write !=null)
 					write.close();
 		}
+		
+	}
 	
+	public void saveListNames(String listName) throws IOException{
+		ArrayList<String> tempListNames = new ArrayList<String>();
+		String listOfNames = "";
+		Writer write = null;
+		String fileForStoringListName = "FileForStoringListName";
+		if(loadList(fileForStoringListName).equals("")){
+			try {
+				OutputStream out = mContext.openFileOutput(fileForStoringListName, Context.MODE_PRIVATE);
+				write = new OutputStreamWriter(out);
+				write.write(listName+",");
+			} finally{
+				if(write !=null)
+					write.close();
+			}
+		} else{
+			if(!loadList(fileForStoringListName).isEmpty()){
+				Scanner scan = new Scanner(loadList(fileForStoringListName)).useDelimiter(",");
+				while(scan.hasNext()){
+					tempListNames.add(scan.next());
+				}
+				tempListNames.add(listName);
+				for(String s : tempListNames){
+					listOfNames += s+",";
+				}
+				try {
+					OutputStream out = mContext.openFileOutput(fileForStoringListName, Context.MODE_PRIVATE);
+					write = new OutputStreamWriter(out);
+					write.write(listOfNames);
+				} finally{
+					if(write !=null)
+						write.close();
+				}
+			}
+		}
 	}
 	
 	public String loadList(String fileName){

@@ -35,7 +35,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="79dp"
         android:onClick="shoppingListButton"
-        android:text="@string/shopping_list" />
+        android:text="@string/shopping_lists" />
 
     <Button
         android:id="@+id/button2"

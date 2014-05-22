@@ -26,6 +26,15 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+	
+	public void saveNewListToLists(String listName) {
+		try {
+			filehandler.saveListNames(listName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 
 	public void addItemToList(String arg0,ShoppingItemModel arg1){
@@ -73,6 +82,16 @@ public class Controller {
 		}
 		scan.close();
 		scanner.close();
+	}
+	
+	public ArrayList<String> getLists(){
+		ArrayList<String> tempList = new ArrayList<String>();
+		String temp = filehandler.loadList("FileForStoringListName");
+		Scanner scan = new Scanner(temp).useDelimiter(",");
+		while(scan.hasNext()){
+			tempList.add(scan.next());
+		}
+		return tempList;
 	}
 
 }
