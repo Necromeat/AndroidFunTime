@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class TextService extends Activity {
 	ListView listContacts;
 	CursorLoader cursorLoader;
 	Cursor cursor;
+	String keyName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,13 @@ public class TextService extends Activity {
 		Context context = getApplicationContext();
 		con.setContext(context);
 		
-		ShoppingItemModel test = new ShoppingItemModel(10,"a");
-		con.addItemToList("shopping_list",test);
-		con.SaveSpecificListToDB("shopping_list");
+		//ShoppingItemModel test = new ShoppingItemModel(10,"a");
+		//con.addItemToList("shopping_list",test);
+		//con.SaveSpecificListToDB("shopping_list");
 		
-		List<ShoppingItemModel> temp = con.getShoppingList("shopping_list");
+		Intent myIntent = getIntent();
+		keyName = myIntent.getStringExtra("keyName");
+		List<ShoppingItemModel> temp = con.getShoppingList(keyName);
 		
 		for(ShoppingItemModel i : temp){
 			dummyList += i.getItemName()+" x "+i.getQuantity() + "\n";
@@ -162,7 +166,7 @@ public class TextService extends Activity {
 	             {
 	                // SHOULD NOW WORK
 	            	SmsManager smsM = SmsManager.getDefault();
-	 				smsM.sendTextMessage(number, null, dummyList, null, null);
+	 				smsM.sendTextMessage(number, null, keyName+ " Shopping List:\n" +dummyList, null, null);
 	 				
 	 				Context context = getApplicationContext();
 	 				CharSequence text = "Text Sent";

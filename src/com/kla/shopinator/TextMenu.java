@@ -57,7 +57,7 @@ public class TextMenu extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				listname = (String) listViewHandle.getItemAtPosition(position);
-				alertbox("Text This List?", "Are you sure you want to choose" + listname+ "?");
+				alertbox("Text This List?", "Are you sure you want to choose " + listname+ "?");
 			}
 		});
 		
