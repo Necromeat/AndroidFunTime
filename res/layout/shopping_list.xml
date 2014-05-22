@@ -10,9 +10,9 @@
 
     <ListView
         android:id="@+id/shopping_list"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_below="@+id/progressBar1"
         android:clickable="true" >
         
     </ListView>
@@ -29,9 +29,10 @@
     <Button
         android:id="@+id/button1"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/new_item"
+        android:layout_marginTop="10dp"
         android:onClick="addItemButton"
         android:text="Add item" />
 
@@ -41,5 +42,20 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button1"
         android:layout_toRightOf="@+id/new_item" />
+    
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list_title"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/list_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:text="TextView" />
     
 </RelativeLayout>

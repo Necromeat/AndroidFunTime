@@ -4,11 +4,11 @@
     <string name="app_name">Shopinator</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_main_menu">MainMenu</string>
-    <string name="title_activity_shopping_list">ShoppingList</string>
-    <string name="title_activity_text_service">TextService</string>
+    <string name="title_activity_main_menu">Main Menu</string>
+    <string name="title_activity_shopping_list">Shopping List</string>
+    <string name="title_activity_text_service">Text Service</string>
     <string name="title_activity_scan_product">ScanProduct</string>
-    <string name="title_activity_find_store">FindStore</string>
+    <string name="title_activity_find_store">Find Store</string>
     <string name="shopping_lists">Shopping Lists</string>
     <string name="text_service">Text Service</string>
     <string name="find_store">Find Store</string>
@@ -48,7 +48,7 @@
         <item>30</item>
     </string-array>
 
-    <string name="title_activity_view_shopping_lists">ViewShoppingLists</string>
+    <string name="title_activity_view_shopping_lists">View Shopping Lists</string>
     <string name="new_shopping_list">Create New List</string>
 
 </resources>

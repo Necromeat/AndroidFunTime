@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.os.Build;
@@ -52,21 +53,17 @@ public class ShoppingList extends Activity {
 
 		context = getApplicationContext();
 		con.setContext(context);
-		/*
-		 * Temporary for test purposes
-		 */
-		//con.deleteList();
-		//ShoppingItemModel test = new ShoppingItemModel(10,"apples");
-		//con.addItemToList("shopping_list",test);
-		//con.SaveSpecificListToDB("shopping_list");
-		/*
-		 * 
-		 */
+		
+		
+		
 		tempArray = new ArrayList<String>();
 		tempList = new ArrayList<ShoppingItemModel>();
 		Intent myIntent = getIntent();
 		keyName = myIntent.getStringExtra("keyName");
 		fillList(keyName);
+		
+		TextView tv = (TextView)findViewById(R.id.list_title);
+		tv.setText(keyName.toUpperCase() + " SHOPPING LIST:");
 	}
 	
 	public void fillSpinner() {
