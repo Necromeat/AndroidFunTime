@@ -7,12 +7,22 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.kla.shopinator.ViewShoppingLists$PlaceholderFragment" >
-
-    <Button
-        android:id="@+id/button1"
+    
+	<EditText
+        android:id="@+id/new_listname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView1"
+        android:inputType="text"
+        android:hint="new list name..."
+        android:ems="10" />
+        
+    <Button
+        android:id="@+id/makeNewListButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_listname"
         android:layout_centerHorizontal="true"
         android:text="@string/new_shopping_list" 
         android:onClick="makeNewListButton" />
@@ -21,7 +31,7 @@
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_below="@+id/progressBar1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp" >
     </ListView>
@@ -31,23 +41,20 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true" />
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:hint="New list name..." />
+    
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_below="@+id/makeNewListButton"
         android:text="Existing lists:" />
+
+    
+
+        
 
 </RelativeLayout>

@@ -91,7 +91,7 @@ public class ShoppingList extends Activity {
 	public void addItemButton(View v){
 		System.out.println("Adding new Item");
 		ShoppingItemModel temp;
-		EditText newItem = (EditText)findViewById(R.id.editText1);
+		EditText newItem = (EditText)findViewById(R.id.new_item);
 		itemAmount = (Spinner)findViewById(R.id.spinner1);
 		String item = newItem.getText().toString();
 		//Testing with 5 for now

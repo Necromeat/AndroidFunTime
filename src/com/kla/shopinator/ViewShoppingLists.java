@@ -21,7 +21,7 @@ import android.os.Build;
 
 public class ViewShoppingLists extends Activity {
 
-	Controller con = new Controller();
+	Controller con;
 	ArrayList<String> allLists;
 	ListView listViewHandle;
 	Context context;
@@ -31,6 +31,7 @@ public class ViewShoppingLists extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_shopping_lists);
 		
+		con = new Controller();
 		context = getApplicationContext();
 		con.setContext(context);
 		
@@ -44,9 +45,9 @@ public class ViewShoppingLists extends Activity {
 	}
 	
 	public void makeNewListButton(View v){
-		EditText et = (EditText)v.findViewById(R.id.editText1);
-		System.out.println("new list name: "+et.getText().toString());
-		String temp = et.getText().toString();
+		EditText tempText = (EditText)findViewById(R.id.new_listname);
+		System.out.println("new list name: "+tempText.getText().toString());
+		String temp = tempText.getText().toString();
 		if(temp.length()>0){
 			allLists.add(temp);
 			con.saveNewListToLists(temp);
