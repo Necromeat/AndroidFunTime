@@ -79,7 +79,8 @@
 
         <activity
             android:name="com.kla.shopinator.ViewShoppingLists"
-            android:label="@string/title_activity_view_shopping_lists" >
+            android:label="@string/title_activity_view_shopping_lists"
+            android:theme="@android:style/Theme.Holo" >
         </activity>
     </application>
 

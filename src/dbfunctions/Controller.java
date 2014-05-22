@@ -42,6 +42,10 @@ public class Controller {
 		list.add(arg1);
 		if(list.contains(arg1)){
 			System.out.println("Item added (in controller).");
+			System.out.println("Current list:");
+			for(ShoppingItemModel s : list){
+				System.out.println(s.getItemName());
+			}
 		}
 		SaveSpecificListToDB(arg0);		// added by Kris 15/5
 	}
@@ -57,14 +61,13 @@ public class Controller {
 	 * 1 Shouldn't be public!
 	 * 2 Deletes all files I think - should only delete a specific shopping list
 	 */
-	public void deleteList(){
-		list.clear();
-		//try {
-		//	filehandler.deleteList();
-		//} catch (IOException e) {
-		//	// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
+	public void deleteList(String fileName){
+		try {
+			filehandler.deleteList(fileName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@SuppressWarnings("resource")
@@ -93,5 +96,37 @@ public class Controller {
 		}
 		return tempList;
 	}
+
+
+	public void deleteItem(String keyName, String itemname) {
+		for(ShoppingItemModel s : list){
+			if(itemname.contains(s.getItemName())){
+				list.remove(s);
+			}
+		}
+		try {
+			filehandler.savelist(keyName, list);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public boolean isUnique(String item) {
+		for(ShoppingItemModel s : list){
+			if(s.getItemName().toLowerCase().equals(item.toLowerCase())){
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	public boolean isUniqueList(String fileName) {
+		return filehandler.isUniqueList(fileName);
+	}
+
+
+	
 
 }

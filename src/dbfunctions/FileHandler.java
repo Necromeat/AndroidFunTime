@@ -24,10 +24,24 @@ public class FileHandler {
 		this.mContext = x;
 	}
 	
-	public void deleteList() throws IOException{
-		//deletes all files
-		File file = mContext.getFilesDir();
-		file.delete();		
+	public void deleteList(String fileName) throws IOException {
+		System.out.println("from deleteList(): "+fileName);
+		ArrayList<String> tempListNames = new ArrayList<String>();
+		mContext.deleteFile(fileName);
+		System.out.println("deleted "+fileName+" from storage");
+		
+		String listofnames = loadList("FileForStoringListName");
+		Scanner scan = new Scanner(listofnames).useDelimiter(",");
+		mContext.deleteFile("FileForStoringListName");
+		String temp = "";
+		while(scan.hasNext()){
+			String scanline = scan.next();
+			System.out.println("meanwhile: "+scanline);
+			if(!scanline.equals(fileName)){
+				temp += scanline;
+			}
+		}
+		saveListNames(temp);
 	}
 	
 	public void savelist(String fileName, List<ShoppingItemModel> lister) throws IOException{
@@ -91,6 +105,7 @@ public class FileHandler {
 		try{
 			System.out.println("Attempting to load: "+fileName);
 			InputStream fIn = mContext.openFileInput(fileName);
+			
 	        if(fIn != null){
 	        	InputStreamReader inputStreamReader = new InputStreamReader(fIn);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -98,10 +113,10 @@ public class FileHandler {
                 StringBuilder stringBuilder = new StringBuilder();
                 
                 while ( (receiveString = bufferedReader.readLine()) != null ) {
-                
+                	System.out.println("from loadlist(): "+receiveString);
                     stringBuilder.append(receiveString);
                 }
-                 
+                
                 fIn.close();
                 temp = stringBuilder.toString();
 	        }
@@ -113,6 +128,16 @@ public class FileHandler {
         }
 		
 		return temp;
+	}
+
+	public boolean isUniqueList(String fileName) {
+		String[] files = mContext.fileList();
+		for(String f : files){
+			if(f.toLowerCase().equals(fileName.toLowerCase())){
+				return false;
+			}
+		}
+		return true;
 	}
 }
 

@@ -7,20 +7,27 @@ import datamodels.ShoppingItemModel;
 import dbfunctions.Controller;
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.os.Build;
 
 public class ShoppingList extends Activity {
@@ -28,6 +35,8 @@ public class ShoppingList extends Activity {
 	Spinner itemAmount;
 	ListView listViewHandle;
 	String keyName;
+	Context context;
+	String itemname;
 	
 	ArrayList<String> tempArray;
 	List<ShoppingItemModel> tempList;
@@ -41,7 +50,7 @@ public class ShoppingList extends Activity {
 		
 		con = new Controller();
 
-		Context context = getApplicationContext();
+		context = getApplicationContext();
 		con.setContext(context);
 		/*
 		 * Temporary for test purposes
@@ -69,27 +78,54 @@ public class ShoppingList extends Activity {
 	}
 	
 	public void fillList(String filename){
-		for(ShoppingItemModel i : con.getShoppingList(filename)){
-			if(tempList.contains(i)==false){
-				tempList.add(i);
-				System.out.println("Item added to temp array: "+i.toString());
-			}else{
-				System.out.println("Temp array already contains "+i.toString());
-			}
-		}
+		tempList.clear();
+		tempList = con.getShoppingList(filename);
+		tempArray.clear();
 		for(ShoppingItemModel i : tempList){
-			if(tempArray.contains(i.getItemName())==false){
-				String amount = ""+i.getQuantity();
-				tempArray.add(i.getItemName()+" x "+amount);
-				System.out.println("Item added to temp shopping list: "+i.getItemName());
-			}else{
-				System.out.println("Shopping list already contains "+i.getItemName());
-			}
+			String amount = ""+i.getQuantity();
+			tempArray.add(i.getItemName()+" x "+amount);
 		}
 		
 		listViewHandle = (ListView)findViewById(R.id.shopping_list);
 		ArrayAdapter<String> a = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tempArray);
 		listViewHandle.setAdapter(a);
+		
+		listViewHandle.setOnItemLongClickListener(new OnItemLongClickListener(){
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {				
+				itemname = (String) listViewHandle.getItemAtPosition(position);
+				System.out.println("item to be deleted: "+itemname);
+				alertbox("Delete item", "Are you sure you want delete item?");
+				return true;
+			}
+		});
+	}
+	
+	protected void alertbox(String title, String mymessage) {
+		   new AlertDialog.Builder(this)
+		      .setMessage(mymessage)
+		      .setTitle(title)
+		      .setCancelable(true)
+		      .setNegativeButton("CANCEL",
+		         new DialogInterface.OnClickListener() {
+		         public void onClick(DialogInterface dialog, int whichButton){}
+		         })
+		         .setPositiveButton("DELETE", new DialogInterface.OnClickListener()
+		         {
+		             @Override
+		             public void onClick(DialogInterface dialog, int whichButton)
+		             {	
+		            	//delete selected item
+		            	con.deleteItem(keyName, itemname);
+		            	fillList(keyName);
+		 				CharSequence text = "Item deleted!";
+						int duration = Toast.LENGTH_LONG; 
+						Toast toast = Toast.makeText(context, text, duration); 
+						toast.show();
+		             }
+		         })
+		      .show();
 	}
 	
 	public void addItemButton(View v){
@@ -100,8 +136,26 @@ public class ShoppingList extends Activity {
 		String item = newItem.getText().toString();
 		int amount = Integer.parseInt(itemAmount.getSelectedItem().toString());
 		temp = new ShoppingItemModel(amount, item);
-		con.addItemToList(keyName, temp);
-		fillList(keyName);
+		boolean isUnique = con.isUnique(item);
+		if(item.length()>0 && isUnique){
+			con.addItemToList(keyName, temp);
+			newItem.setText("");
+			fillList(keyName);
+		}
+		if(!isUnique){
+			newItem.setText("");
+			CharSequence text = "Item already in list!";
+			int duration = Toast.LENGTH_LONG;
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+		}
+		else {
+			newItem.setText("");
+			CharSequence text = "Item name not valid!";
+			int duration = Toast.LENGTH_LONG;
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+		}
 	}
 
 	@Override

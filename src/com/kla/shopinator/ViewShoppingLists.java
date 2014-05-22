@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import dbfunctions.Controller;
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -31,6 +35,7 @@ public class ViewShoppingLists extends Activity {
 	ListView listViewHandle;
 	Context context;
 	Intent shoppingList;
+	String listname;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,32 +58,71 @@ public class ViewShoppingLists extends Activity {
 		
 		
 		listViewHandle.setOnItemClickListener(new OnItemClickListener() {
-		
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				//option to delete or view
-				
-				//
-				String listname = (String) listViewHandle.getItemAtPosition(position);
+				listname = (String) listViewHandle.getItemAtPosition(position);
 				System.out.println("selected list item: "+listname);
 				shoppingList.putExtra("keyName", listname);
 				startActivity(shoppingList);
 			}
 		});
+		listViewHandle.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				listname = (String) listViewHandle.getItemAtPosition(position);
+				alertbox("Delete list", "Are you sure you want delete list?");
+				return true;
+			}
+		});
 	}
+	
+	protected void alertbox(String title, String mymessage) {
+	   new AlertDialog.Builder(this)
+	      .setMessage(mymessage)
+	      .setTitle(title)
+	      .setCancelable(true)
+	      .setNegativeButton("CANCEL",
+	         new DialogInterface.OnClickListener() {
+	         public void onClick(DialogInterface dialog, int whichButton){}
+	         })
+	         .setPositiveButton("DELETE", new DialogInterface.OnClickListener()
+	         {
+	             @Override
+	             public void onClick(DialogInterface dialog, int whichButton)
+	             {	
+	            	//delete selected list
+	            	con.deleteList(listname);
+	            	fillAllShoppingLists();
+	 				CharSequence text = "List deleted!";
+					int duration = Toast.LENGTH_LONG; 
+					Toast toast = Toast.makeText(context, text, duration); 
+					toast.show();
+	             }
+	         })
+	      .show();
+	   }
 	
 	public void makeNewListButton(View v){
 		EditText tempText = (EditText)findViewById(R.id.new_listname);
 		System.out.println("new list name: "+tempText.getText().toString());
 		String temp = tempText.getText().toString();
-		
-		if(temp.length()>0){
+		boolean isUnique = con.isUniqueList(temp);
+		if(temp.length()>0 && isUnique){
 			allLists.add(temp);
 			con.saveNewListToLists(temp);
 			con.SaveSpecificListToDB(temp);
+			tempText.setText("");
 			fillAllShoppingLists();
 		}
+		if(!isUnique){
+			tempText.setText("");
+			CharSequence text = "List already exists!";
+			int duration = Toast.LENGTH_LONG;
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+		}
 		else{
+			tempText.setText("");
 			CharSequence text = "List name not valid!";
 			int duration = Toast.LENGTH_LONG;
 			Toast toast = Toast.makeText(context, text, duration);
