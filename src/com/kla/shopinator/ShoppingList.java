@@ -138,7 +138,7 @@ public class ShoppingList extends Activity {
 			con.addItemToList(keyName, temp);
 			newItem.setText("");
 			fillList(keyName);
-		}
+		}else{
 		if(!isUnique){
 			newItem.setText("");
 			CharSequence text = "Item already in list!";
@@ -152,6 +152,7 @@ public class ShoppingList extends Activity {
 			int duration = Toast.LENGTH_LONG;
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
+		}
 		}
 	}
 

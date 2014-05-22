@@ -38,7 +38,7 @@ public class FileHandler {
 			String scanline = scan.next();
 			System.out.println("meanwhile: "+scanline);
 			if(!scanline.equals(fileName)){
-				temp += scanline;
+				temp += scanline+",";
 			}
 		}
 		saveListNames(temp);
@@ -85,6 +85,7 @@ public class FileHandler {
 				}
 				tempListNames.add(listName);
 				for(String s : tempListNames){
+					if(!s.equals(""))
 					listOfNames += s+",";
 				}
 				try {

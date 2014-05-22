@@ -113,7 +113,7 @@ public class ViewShoppingLists extends Activity {
 			con.SaveSpecificListToDB(temp);
 			tempText.setText("");
 			fillAllShoppingLists();
-		}
+		}else{
 		if(!isUnique){
 			tempText.setText("");
 			CharSequence text = "List already exists!";
@@ -127,6 +127,7 @@ public class ViewShoppingLists extends Activity {
 			int duration = Toast.LENGTH_LONG;
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
+		}
 		}
 	}
 
