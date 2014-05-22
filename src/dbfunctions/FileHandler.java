@@ -38,6 +38,7 @@ public class FileHandler {
 		}
 		Writer write = null;
 		try {
+			System.out.println("Attempting to save: "+fileName);
 			OutputStream out = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
 			write = new OutputStreamWriter(out);
 			write.write(saveList);
@@ -84,10 +85,11 @@ public class FileHandler {
 		}
 	}
 	
-	public String loadList(String fileName){
+	public String loadList(String fileName) {
 		String temp = "";
 		BufferedReader reader = null;
 		try{
+			System.out.println("Attempting to load: "+fileName);
 			InputStream fIn = mContext.openFileInput(fileName);
 	        if(fIn != null){
 	        	InputStreamReader inputStreamReader = new InputStreamReader(fIn);

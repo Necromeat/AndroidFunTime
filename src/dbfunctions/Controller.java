@@ -68,9 +68,9 @@ public class Controller {
 	}
 	
 	@SuppressWarnings("resource")
-	 private void loadList(String Name){
+	 private void loadList(String name){
 		list.clear();
-		String temp = filehandler.loadList(Name);
+		String temp = filehandler.loadList(name);
 		Scanner scan = new Scanner(temp).useDelimiter(";");
 	
 		Scanner scanner = scan;

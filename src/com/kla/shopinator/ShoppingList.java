@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +27,7 @@ public class ShoppingList extends Activity {
 	Controller con;
 	Spinner itemAmount;
 	ListView listViewHandle;
+	String keyName;
 	
 	ArrayList<String> tempArray;
 	List<ShoppingItemModel> tempList;
@@ -44,16 +46,18 @@ public class ShoppingList extends Activity {
 		/*
 		 * Temporary for test purposes
 		 */
-		con.deleteList();
-		ShoppingItemModel test = new ShoppingItemModel(10,"apples");
-		con.addItemToList("shopping_list",test);
-		con.SaveSpecificListToDB("shopping_list");
+		//con.deleteList();
+		//ShoppingItemModel test = new ShoppingItemModel(10,"apples");
+		//con.addItemToList("shopping_list",test);
+		//con.SaveSpecificListToDB("shopping_list");
 		/*
 		 * 
 		 */
 		tempArray = new ArrayList<String>();
 		tempList = new ArrayList<ShoppingItemModel>();
-		fillList();
+		Intent myIntent = getIntent();
+		keyName = myIntent.getStringExtra("keyName");
+		fillList(keyName);
 	}
 	
 	public void fillSpinner() {
@@ -61,11 +65,11 @@ public class ShoppingList extends Activity {
 		ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this, R.array.spinner_numbers, android.R.layout.simple_spinner_item);
 		spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		itemAmount.setAdapter(spinAdapter);
-		System.out.println("filling spinner");
+		//System.out.println("filling spinner");
 	}
 	
-	public void fillList(){
-		for(ShoppingItemModel i : con.getShoppingList("shopping_list")){
+	public void fillList(String filename){
+		for(ShoppingItemModel i : con.getShoppingList(filename)){
 			if(tempList.contains(i)==false){
 				tempList.add(i);
 				System.out.println("Item added to temp array: "+i.toString());
@@ -91,14 +95,13 @@ public class ShoppingList extends Activity {
 	public void addItemButton(View v){
 		System.out.println("Adding new Item");
 		ShoppingItemModel temp;
-		EditText newItem = (EditText)findViewById(R.id.editText1);
+		EditText newItem = (EditText)findViewById(R.id.new_item);
 		itemAmount = (Spinner)findViewById(R.id.spinner1);
 		String item = newItem.getText().toString();
-		//Testing with 5 for now
 		int amount = Integer.parseInt(itemAmount.getSelectedItem().toString());
 		temp = new ShoppingItemModel(amount, item);
-		con.addItemToList("shopping_list", temp);
-		fillList();
+		con.addItemToList(keyName, temp);
+		fillList(keyName);
 	}
 
 	@Override

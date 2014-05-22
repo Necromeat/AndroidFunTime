@@ -130,7 +130,7 @@ public class TextService extends Activity {
 
 	
 	public void sendTextButton(View v){
-		EditText tempNum = (EditText)findViewById(R.id.editText1);
+		EditText tempNum = (EditText)findViewById(R.id.new_number);
 		number = tempNum.getText().toString();
 		if(!number.isEmpty()&&number.length()>=8){
 			alertbox("Send Text", "Are you sure you want to text "+ number);

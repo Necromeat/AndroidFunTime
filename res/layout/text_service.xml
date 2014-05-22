@@ -11,7 +11,7 @@
     
     
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/new_number"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignLeft="@+id/conactlist"
@@ -25,9 +25,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_alignRight="@+id/editText1"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/new_number"
         android:text="Send"
         android:onClick="sendTextButton" />
     
