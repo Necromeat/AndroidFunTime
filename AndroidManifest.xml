@@ -85,6 +85,11 @@
             android:theme="@android:style/Theme.Holo"
             android:windowSoftInputMode="stateHidden" >
         </activity>
+        <activity
+            android:name="com.kla.shopinator.TextMenu"
+            android:label="@string/title_activity_text_menu"
+            android:theme="@android:style/Theme.Holo" >
+        </activity>
     </application>
 
 </manifest>

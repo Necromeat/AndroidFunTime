@@ -50,5 +50,6 @@
 
     <string name="title_activity_view_shopping_lists">View Shopping Lists</string>
     <string name="new_shopping_list">Create New List</string>
+    <string name="title_activity_text_menu">TextMenu</string>
 
 </resources>

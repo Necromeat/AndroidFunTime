@@ -17,7 +17,7 @@ import android.os.Build;
 public class MainMenu extends Activity {
 	
 	Intent viewShoppingLists;
-	Intent textService;
+	Intent textMenu;
 	Intent findStore;
 	Intent scanProduct;
 
@@ -27,7 +27,7 @@ public class MainMenu extends Activity {
 		setContentView(R.layout.main_menu);
 		
 		viewShoppingLists = new Intent(this, ViewShoppingLists.class);//ShoppingList.class);
-		textService = new Intent(this, TextService.class);
+		textMenu = new Intent(this, TextMenu.class);
 		findStore = new Intent(this, FindStore.class);
 		scanProduct = new Intent(this, ScanProduct.class);
 
@@ -58,7 +58,7 @@ public class MainMenu extends Activity {
 		startActivity(viewShoppingLists);
 	}
 	public void textServiceButton(View v){
-		startActivity(textService);
+		startActivity(textMenu);
 	}
 	public void findStoreButton(View v){
 		startActivity(findStore);
